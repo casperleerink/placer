@@ -19,7 +19,7 @@ export const posts = pgTable('posts', {
         index_y: uniqueIndex("index_y").on(table.y),
     };
 });
-
+//change
 export const postPivot = pgTable('postpivot', {
     fromPostId: integer('from_post_id').notNull(),
     toPostId: integer('to_post_id').notNull(),

@@ -1,10 +1,21 @@
 import { json } from '@sveltejs/kit';
-import { db } from '../../../db/config';
-import { posts } from '../../../db/schema';
-import type { RequestHandler } from './$types';
+import { getPostInBbox } from '../../../db/query';
 
-export const GET = (async () => {
-	const allPosts = await db.select().from(posts);
 
-	return json(allPosts);
-}) satisfies RequestHandler;
+// export const POST = async (request: RequestHandler) => {
+// 	const { postId, radius } = request.params;
+// 	const relatedPosts = await query.getRelatedPosts(parseInt(postId), parseInt(radius));
+// 	return json(relatedPosts);
+
+// }
+
+export const GET = async () => {
+	const bbox = {
+		xMin: 1,
+		xMax: 2,
+		yMin: 1,
+		yMax: 2,
+	}
+	const posts = await getPostInBbox(bbox);
+	return json(posts);
+}

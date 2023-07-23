@@ -1,5 +1,6 @@
 import { eq, sql } from "drizzle-orm";
 import { db } from "./config";
+import type { Post } from "./schema";
 import { posts } from "./schema";
 
 
@@ -9,11 +10,7 @@ export interface BoundingBox {
     yMin: number;
     yMax: number;
 }
-export interface Post {
-  id: number;
-  x: number;
-  y: number;
-}
+
 export async function getPostInBbox(bbox: BoundingBox): Promise<Post[]> {
     const postsInView = await db.select().from(posts).where(
         sql`x >= ${bbox.xMin} AND x <= ${bbox.xMax} AND y >= ${bbox.yMin} AND y <= ${bbox.yMax}`);

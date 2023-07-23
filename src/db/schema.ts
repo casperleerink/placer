@@ -16,8 +16,7 @@ export const posts = pgTable('posts', {
     y: integer('y').notNull(),
 }, (table) => {
     return {
-        index_x: uniqueIndex("index_x").on(table.x),
-        index_y: uniqueIndex("index_y").on(table.y),
+        index_xy: uniqueIndex("index_xy").on(table.x, table.y),
     };
 });
 

@@ -1,3 +1,4 @@
+import type { InferModel } from "drizzle-orm";
 import { integer, json, pgTable, primaryKey, serial, uniqueIndex, varchar } from "drizzle-orm/pg-core";
 
 export const users = pgTable('users', {
@@ -15,8 +16,7 @@ export const posts = pgTable('posts', {
     y: integer('y').notNull(),
 }, (table) => {
     return {
-        index_x: uniqueIndex("index_x").on(table.x),
-        index_y: uniqueIndex("index_y").on(table.y),
+        index_xy: uniqueIndex("index_xy").on(table.x, table.y),
     };
 });
 
@@ -26,3 +26,7 @@ export const postPivot = pgTable('postpivot', {
 }, (table) => {
     return {pk: primaryKey(table.fromPostId, table.toPostId)};
 });
+
+export type User = InferModel<typeof users>;
+export type Post = InferModel<typeof posts>;
+export type PostPivot = InferModel<typeof postPivot>;
